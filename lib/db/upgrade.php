@@ -4481,7 +4481,7 @@ privatefiles,moodle|/user/files.php';
     // Automatically generated Moodle v4.0.0 release upgrade line.
     // Put any upgrade step following this.
 
-    if ($oldversion < 2022042900.01) {
+    if ($oldversion < 2022041900.03) {
         // Social custom fields could had been created linked to category id = 1. Let's check category 1 exists.
         if (!$DB->get_record('user_info_category', ['id' => 1])) {
             // Let's check if we have any custom field linked to category id = 1.
@@ -4496,61 +4496,10 @@ privatefiles,moodle|/user/files.php';
         }
 
         // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022042900.01);
+        upgrade_main_savepoint(true, 2022041900.03);
     }
 
-    if ($oldversion < 2022051000.00) {
-        // Add index to the sid field in the external_tokens table.
-        $table = new xmldb_table('external_tokens');
-        $index = new xmldb_index('sid', XMLDB_INDEX_NOTUNIQUE, ['sid']);
-
-        if (!$dbman->index_exists($table, $index)) {
-            $dbman->add_index($table, $index);
-        }
-
-        upgrade_main_savepoint(true, 2022051000.00);
-    }
-
-    if ($oldversion < 2022052500.00) {
-        // Start an adhoc task to fix the file timestamps of restored files.
-        $task = new core\task\fix_file_timestamps_task();
-        \core\task\manager::queue_adhoc_task($task);
-
-        // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022052500.00);
-    }
-
-    if ($oldversion < 2022052700.01) {
-
-        // Define index timestarted_idx (not unique) to be added to task_adhoc.
-        $table = new xmldb_table('task_adhoc');
-        $index = new xmldb_index('timestarted_idx', XMLDB_INDEX_NOTUNIQUE, ['timestarted']);
-
-        // Conditionally launch add index timestarted_idx.
-        if (!$dbman->index_exists($table, $index)) {
-            $dbman->add_index($table, $index);
-        }
-
-        // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022052700.01);
-    }
-
-    if ($oldversion < 2022052700.02) {
-
-        // Define index filename (not unique) to be added to files.
-        $table = new xmldb_table('files');
-        $index = new xmldb_index('filename', XMLDB_INDEX_NOTUNIQUE, ['filename']);
-
-        // Conditionally launch add index filename.
-        if (!$dbman->index_exists($table, $index)) {
-            $dbman->add_index($table, $index);
-        }
-
-        // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022052700.02);
-    }
-
-    if ($oldversion < 2022060300.01) {
+    if ($oldversion < 2022041901.05) {
 
         // Changing precision of field hidden on table grade_categories to (10).
         $table = new xmldb_table('grade_categories');
@@ -4567,10 +4516,10 @@ privatefiles,moodle|/user/files.php';
         $dbman->change_field_precision($table, $field);
 
         // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022060300.01);
+        upgrade_main_savepoint(true, 2022041901.05);
     }
 
-    if ($oldversion < 2022061000.01) {
+    if ($oldversion < 2022041901.07) {
         // Iterate over custom user menu items configuration, removing pix icon references.
         $customusermenuitems = str_replace(["\r\n", "\r"], "\n", $CFG->customusermenuitems);
 
@@ -4584,15 +4533,7 @@ privatefiles,moodle|/user/files.php';
 
         set_config('customusermenuitems', implode("\n", $lines));
 
-        upgrade_main_savepoint(true, 2022061000.01);
-    }
-
-    if ($oldversion < 2022061500.00) {
-        // Remove drawer-open-nav user preference for every user.
-        $DB->delete_records('user_preferences', ['name' => 'drawer-open-nav']);
-
-        // Main savepoint reached.
-        upgrade_main_savepoint(true, 2022061500.00);
+        upgrade_main_savepoint(true, 2022041901.07);
     }
 
     return true;

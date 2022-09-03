@@ -3842,7 +3842,7 @@ EOD;
                 if ($langtype !== $currentlang) {
                     $attributes[] = [
                         'key' => 'lang',
-                        'value' => get_html_lang_attribute_value($langtype),
+                        'value' => str_replace('_', '-', $langtype),
                     ];
                 }
                 $this->language->add($langname, new moodle_url($this->page->url, ['lang' => $langtype]), null, null, $attributes);

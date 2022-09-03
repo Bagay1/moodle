@@ -418,7 +418,7 @@ function xmldb_bigbluebuttonbn_upgrade($oldversion = 0) {
     // Automatically generated Moodle v4.0.0 release upgrade line.
     // Put any upgrade step following this.
 
-    if ($oldversion < 2022050600) {
+    if ($oldversion < 2022041901) {
 
         set_config('bigbluebuttonbn_default_dpa_accepted', false);
 
@@ -435,7 +435,7 @@ function xmldb_bigbluebuttonbn_upgrade($oldversion = 0) {
         }
 
         // Bigbluebuttonbn savepoint reached.
-        upgrade_mod_savepoint(true, 2022050600, 'bigbluebuttonbn');
+        upgrade_mod_savepoint(true, 2022041901, 'bigbluebuttonbn');
     }
 
     return true;
